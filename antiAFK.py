@@ -28,7 +28,7 @@ def temp_move(win):  # случайное перемещение и возвра
         t = random.randint(1, 3)
         time.sleep(t)
         autoit.mouse_click("left", x - dx, y - dy)
-        time.sleep(0.5)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
