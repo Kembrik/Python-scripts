@@ -1,0 +1,36 @@
+# Prefix
+to maximum Energy Shield
+% increased Energy Shield
+to maximum Life
+% increased Physical Damage
+#
+to maximum Mana
+to Evasion Rating
+to Armour
+% increased Armour
+Physical Damage to Melee Attackers
+to Level of Socketed Melee Gems
+
+#Suffix
+
+to Strength
+% to Cold Resistance
+% to Fire Resistance
+% to Lightning Resistance
+% to all Elemental Resistances
+% to Fire and Cold Resistances
+% to Cold and Lightning Resistances
+% to Fire and Lightning Resistances
+to All Attributes
+% increased Cast Speed
+
+#
+Life Regenerated per second
+% to Chaos Resistance
+% reduced Attribute Requirements
+% increased Stun and Block Recovery
+% Chance to Block
+% of Life Regenerated per second
+% additional Block Chance against Projectiles
+% chance to Avoid being Stunned
+Life gained when you Block

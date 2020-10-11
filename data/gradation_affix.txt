@@ -1,0 +1,35 @@
+# Prefix
+60,to maximum Life(maximum Life,to Strength,All Attributes)
+35,to maximum Energy Shield
+30,% increased Energy Shield
+10,% increased Movement Speed
+5,Physical Damage to Attacks
+20,Cold Damage to Attacks
+20,Fire Damage to Attacks
+20,Lightning Damage to Attacks
+5,Physical Damage to Melee Attackers
+20,% increased Elemental Damage with Attack Skills
+10,% increased Spell Damage
+10,% increased Physical Damage
+
+#Suffix
+40,total Resistances(% to Cold Resistance,% to Fire Resistance,% to Lightning Resistance,% to all Elemental Resistances,% to Fire and Cold Resistances,% to Cold and Lightning Resistances,% to Fire and Lightning Resistances)
+50,% to Cold Resistance
+50,% to Fire Resistance
+50,% to Lightning Resistance
+20,% to all Elemental Resistances
+20,% to Fire and Cold Resistances
+20,% to Cold and Lightning Resistances
+20,% to Fire and Lightning Resistances
+30,to All Attributes
+30,to Dexterity
+30,to Strength
+30,to Intelligence
+20,% to Global Critical Strike Multiplier
+7,% increased Attack Speed
+190,to Accuracy Rating
+7,% increased Cast Speed
+20,% increased Global Critical Strike Chance
+10,% increased Cold Damage
+10,% increased Fire Damage
+10,% increased Lightning Damage

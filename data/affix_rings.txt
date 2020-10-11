@@ -1,0 +1,49 @@
+# Prefix
+to maximum Life(maximum Life,to Strength,All Attributes)
+Physical Damage to Attacks
+Cold Damage to Attacks
+Fire Damage to Attacks
+Lightning Damage to Attacks
+% increased Elemental Damage with Attack Skills
+to maximum Energy Shield
+to maximum Life
+
+#
+to Evasion Rating
+% of Physical Attack Damage Leeched as Life
+% of Physical Attack Damage Leeched as Mana
+to maximum Mana
+% increased Rarity of Items found
+to Level of Socketed Gems (Unset Ring only)
+
+#Suffix
+total Resistances(% to Cold Resistance,% to Fire Resistance,% to Lightning Resistance,% to all Elemental Resistances,% to Fire and Cold Resistances,% to Cold and Lightning Resistances,% to Fire and Lightning Resistances)
+to Accuracy Rating
+to All Attributes
+to Dexterity
+to Strength
+to Intelligence
+% increased Cast Speed
+% increased Attack Speed
+% increased Cold Damage
+% increased Fire Damage
+% increased Lightning Damage
+% to Cold Resistance
+% to Fire Resistance
+% to Lightning Resistance
+% to all Elemental Resistances
+% to Fire and Cold Resistances
+% to Cold and Lightning Resistances
+% to Fire and Lightning Resistances
+
+#
+Life gained on Kill
+Life gained for each Enemy hit by your Attacks
+Mana gained on Kill
+
+% to Chaos Resistance
+
+% increased Mana Regeneration Rate
+Life Regenerated per second
+% increased Rarity of Items found
+% increased Light Radius / +# or #% to Accuracy Rating

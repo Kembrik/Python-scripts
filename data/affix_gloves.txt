@@ -1,0 +1,45 @@
+# Prefix
+
+to maximum Life(maximum Life,to Strength,All Attributes)
+Physical Damage to Attacks
+Cold Damage to Attacks
+Fire Damage to Attacks
+Lightning Damage to Attacks
+to maximum Energy Shield
+to maximum Life
+
+#
+% increased Armour
+% increased Armour
+to Armour
+% increased Rarity of Items found
+% of Physical Attack Damage Leeched as Life
+% of Physical Attack Damage Leeched as Mana
+
+to Evasion Rating
+% increased Evasion Rating
+to maximum Mana
+% increased Energy Shield
+
+% increased Armour and Energy Shield
+% increased Armour and Evasion Rating
+% increased Evasion Rating and Energy Shield
+
+#Suffix
+total Resistances(% to Cold Resistance,% to Fire Resistance,% to Lightning Resistance,% to all Elemental Resistances,% to Fire and Cold Resistances,% to Cold and Lightning Resistances,% to Fire and Lightning Resistances)
+to Accuracy Rating
+% increased Attack Speed
+to Strength
+to Dexterity
+% to Cold Resistance
+% to Fire Resistance
+% to Lightning Resistance
+
+#
+Life gained for each Enemy hit by your Attacks
+Life gained on Kill
+Mana gained on Kill
+Life Regenerated per second
+% to Chaos Resistance
+% reduced Attribute Requirements
+% increased Rarity of Items found

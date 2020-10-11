@@ -1,0 +1,32 @@
+# Prefix
+
+to maximum Life(maximum Life,to Strength,All Attributes)
+% increased Movement Speed
+to maximum Life
+#
+% increased Rarity of Items found
+to Evasion Rating
+% increased Evasion Rating
+to maximum Mana
+to maximum Energy Shield
+% increased Energy Shield
+% increased Armour
+to Armour
+% increased Armour and Energy Shield
+% increased Armour and Evasion Rating
+% increased Evasion Rating and Energy Shield
+
+#Suffix
+
+to Strength
+total Resistances(% to Cold Resistance,% to Fire Resistance,% to Lightning Resistance,% to all Elemental Resistances,% to Fire and Cold Resistances,% to Cold and Lightning Resistances,% to Fire and Lightning Resistances)
+% to Cold Resistance
+% to Fire Resistance
+% to Lightning Resistance
+
+#
+Life Regenerated per second
+% to Chaos Resistance
+% reduced Attribute Requirements
+% increased Stun and Block Recovery
+% increased Rarity of Items found

@@ -1,0 +1,18 @@
+#Weapons
+One Hand Mace, Two Hand Mace, One Hand Axe, Two Hand Axe, One Hand Sword, Two Hand Sword, Thrusting One Hand Sword, Bow, Claw, Dagger, Sceptre, Staff, Wand
+#Shields
+Shield, Buckler, Bundle
+#Helmets
+Bascinet, Burgonet, Cap, Circlet, Cage, Coif, Crown, Hat, Helm, Helmet, Hood, Mask, Pelt, Tricorne, Sallet
+#Body Armour
+Armour, Brigandine, Chestplate, Chainmail, Coat, Doublet, Garb, Hauberk, Jacket, Jerkin, Lamellar, Leather, Plate, Robe, Raiment, Regalia, Ringmail, Silks, Tunic, Vest, Vestment, Full Wyrmscale
+#Gloves
+Gauntlets, Gloves, Mitts
+#Boots
+Boots, Greaves, Shoes, Slippers
+#Amulets
+Amulet, Talisman
+#Rings
+Ring, Hoop
+#Belts
+Belt, Sash, Vise

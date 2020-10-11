@@ -1,5 +1,6 @@
 import tkinter
 import datetime
+import keyboard
 
 
 def start_sw():
@@ -49,6 +50,7 @@ def update_position(event):
     root.wm_geometry("+%d+%d" % (event.x_root + dif_x, event.y_root + dif_y))
 
 
+# def stopwatch():
 root = tkinter.Tk()
 temp = 0
 afto_id = ""
@@ -59,7 +61,6 @@ root.overrideredirect(True)
 root.wm_attributes("-topmost", True)
 root.wm_attributes("-alpha", 0.5)
 root.geometry(f"+{dif_x}+{dif_y}")
-
 
 label1 = tkinter.Label(root, width=5, font="Arial 25", text="00:00")
 label1.grid(row=0, columnspan=2)
@@ -75,3 +76,8 @@ root.bind("<ButtonPress-1>", on_mouse_down)
 root.bind("<B1-Motion>", update_position)
 
 root.mainloop()
+
+
+# if __name__ == "__main__":
+#     stopwatch()
+

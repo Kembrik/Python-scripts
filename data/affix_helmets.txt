@@ -1,0 +1,38 @@
+# Prefix
+
+to maximum Life(maximum Life,to Strength,All Attributes)
+Physical Damage to Melee Attackers
+to maximum Energy Shield
+to maximum Life
+
+#
+% increased Armour
+to Armour
+to Level of Socketed Minion Gems
+Physical Damage to Melee Attackers
+% increased Rarity of Items found
+to Evasion Rating
+% increased Evasion Rating
+to maximum Mana
+% increased Energy Shield
+
+% increased Armour and Energy Shield
+% increased Armour and Evasion Rating
+% increased Evasion Rating and Energy Shield
+
+#Suffix
+total Resistances(% to Cold Resistance,% to Fire Resistance,% to Lightning Resistance,% to all Elemental Resistances,% to Fire and Cold Resistances,% to Cold and Lightning Resistances,% to Fire and Lightning Resistances)
+to Accuracy Rating
+to Strength
+to Intelligence
+% to Cold Resistance
+% to Fire Resistance
+% to Lightning Resistance
+
+#
+% increased Light Radius
+Life Regenerated per second
+% to Chaos Resistance
+% reduced Attribute Requirements
+% increased Rarity of Items found
+% increased Stun and Block Recovery
