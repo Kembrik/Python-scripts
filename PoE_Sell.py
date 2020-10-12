@@ -93,64 +93,51 @@ def determ_quality():  # определение качества
 
 
 def sorting_items(arrItems):  # сортировка предметов
-    arrQuality = sorting_quality(arrItems)
-    # print_list(arrQuality)
-    # print("-" * 20)
-    return grouping_items(arrQuality)
+    tmpSet = 1
+    arrQuality = []
+    while tmpSet:
+        tmpSet = grouping_items(len(arrItems), tmpSet, arrItems)
+        if tmpSet:
+            arrQuality.append(creat_set(arrItems, tmpSet))
+            arrItems = updating_set_Quality(arrItems, tmpSet)
 
-
-def sorting_quality(arrItems):  # сортировка качества
-    arrQuality = [[] for x in range(20)]
-    for item in arrItems:
-        quality = item[0]
-        arrQuality[quality].append(item[1:])
-    # arrQuality = [x for x in arrQuality if x]
     return arrQuality
 
 
-def grouping_items(arrQuality):  # грипировка предметов по сумме качеств
-    tmpList = {"qual": 19, "sum": 40, "setTtems": []}
-    setItems = []
-    while tmpList["qual"]:
-        tmpList = {"qual": 19, "sum": 40, "setTtems": []}
-        tmpSet, arrQuality = recursiv_sum(arrQuality, tmpList)
-        if tmpList["qual"]:
-            setItems.append(tmpList["setTtems"])
-    return setItems
+def creat_set(arrItems, tmpSet):  # создание сета суммы предметов
+    setItem = [x[1:] for n, x in enumerate(arrItems) if tmpSet[n]]
+    return setItem
 
 
-def recursiv_sum(arrQuality, tmpList):
-    for qual in range(tmpList["qual"], 0, -1):
-        if len(arrQuality[qual]):
-            tmpSum = tmpList["sum"] - qual
-            pop = arrQuality[qual][-1]
-            if tmpSum == 0:
-                tmpList["qual"] = qual
-                tmpList["setTtems"].append(pop)
-                arrQuality[qual].pop(-1)
-                return tmpList, arrQuality
-            elif tmpSum > 0:
-                tmpList["qual"] = qual
-                tmpList["sum"] = tmpSum
-                if tmpList["sum"] <= qual:
-                    tmpList["qual"] = tmpList["sum"]
-                tmp_arrQuality = copy.deepcopy(arrQuality)
-                tmp_arrQuality[qual].pop(-1)
-                tmpList, tmp_arrQuality = recursiv_sum(tmp_arrQuality, tmpList)
+def grouping_items(n, tmpSet, arrItems, prefix=[]):  # генерирование вариантов
+    if n == 0:
+        if calculation(prefix, arrItems):
+            tmpSet = prefix[:]
+            return tmpSet
+    else:
+        tmpSet = grouping_items(n - 1, tmpSet, arrItems, prefix + [0])
+        if tmpSet:
+            return tmpSet
+        tmpSet = grouping_items(n - 1, tmpSet, arrItems, prefix + [1])
+        if tmpSet:
+            return tmpSet
+    return []
 
-                if tmpList["qual"] > 0:
-                    arrQuality = tmp_arrQuality.copy()
-                    tmpList["setTtems"].append(pop)
-                    return tmpList, arrQuality
-                else:
-                    tmpList["sum"] += qual
-            else:
-                tmpList["sum"] += qual
-                tmpList["qual"] = 0
-                return tmpList, arrQuality
-    # tmpList["sum"] += tmpList["qual"]
-    tmpList["qual"] = 0
-    return tmpList, arrQuality
+
+def calculation(prefix, arrItems):  # подсчет суммы
+    # mass = 0
+    sumQuality = 40
+    for i in range(len(prefix)):
+        if prefix[i] == 1:
+            sumQuality -= arrItems[i][0]
+    if not sumQuality:
+        return 1
+    return 0
+
+
+def updating_set_Quality(arrItems, tmpSet):  # обновление списка предметов
+    setQuality = [x for n, x in enumerate(arrItems) if not tmpSet[n]]
+    return setQuality
 
 
 def transfer_inventory():  # перекладываем сеты в инвертарь
