@@ -7,9 +7,10 @@ import autoit
 def creation_array():  # создаем массив предметов
     global arrGroupItems
     global dimensions
+    global heightItem
     dimensions = select_area_sort()
-    # heightItem = sel_type_item() + 1  # при бутылках увелитивается высота в 2
-    heightItem = 2
+    heightItem = sel_type_item()  # при бутылках увелитивается высота в 2
+    # heightItem = 2
     arrItems = array_write(dimensions, heightItem)
     arrGroupItems = sorting_items(arrItems)
     print(arrGroupItems)
@@ -44,8 +45,9 @@ def sel_type_item():  # выбор типа предмета сортировк�
     )
 
     root.destroy()
-    return 1
-    # return answer
+    if answer:
+        return 1
+    return 2
 
 
 def array_write(dimensions, heightItem):  # запись предемеов в массив
@@ -136,18 +138,59 @@ def calculation(prefix, arrItems):  # подсчет суммы
 
 
 def updating_set_Quality(arrItems, tmpSet):  # обновление списка предметов
-    setQuality = [x for n, x in enumerate(arrItems) if not tmpSet[n]]
-    return setQuality
+    arrItems = [x for n, x in enumerate(arrItems) if not tmpSet[n]]
+    return arrItems
 
 
 def transfer_inventory():  # перекладываем сеты в инвертарь
-    # global arrGroupItems
-    print(arrGroupItems)
+    # heightItem = 2
+    global arrGroupItems
+    delta = [53, 53 * heightItem]
+    inventory_sizes = [[] for i in range(5 // heightItem)]
+    inventory, arrGroupItems = distribution_inventory(arrGroupItems, inventory_sizes)
+    transfer(inventory, delta)
+    if arrGroupItems:
+        print("Еще не все!")
+
+
+def distribution_inventory(
+    arrGroupItems, inventory_sizes
+):  # распределение группы по инвентаря
+    inventory = [[] for i in inventory_sizes]
+    copArrGroupItems = copy.deepcopy(arrGroupItems)
+    for nSet, setItem in enumerate(arrGroupItems):
+        for y, height in enumerate(inventory_sizes):
+            if len(height) + len(setItem) <= 12:
+                inventory_sizes[y] += [1] * len(setItem) + [0]
+                inventory[y] += setItem + [0]
+                copArrGroupItems.remove(setItem)
+                break
+    arrGroupItems = copArrGroupItems
+    return inventory, arrGroupItems
+
+
+def transfer(inventory, delta):  # перенос предметов
+    dimensions = [43, 181]
+    startPosImv = [1298, 618]
+    for y, row in enumerate(inventory):
+        for x, col in enumerate(row):
+            if col:
+                mouse_click(dimensions, col, delta)
+                itemPos = [x, y]
+                mouse_click(startPosImv, itemPos, delta)
+
+
+def mouse_click(coordinates, itemPos=0, delta=0):  # перемещение курсора
+    x = coordinates[0] + itemPos[0] * delta[0]
+    y = coordinates[1] + itemPos[1] * delta[1]
+    autoit.mouse_move(x, y)
+    autoit.mouse_click("left", x, y)
 
 
 if __name__ == "__main__":
     arrGroupItems = []
     dimensions = []
+    heightItem = 0
     keyboard.add_hotkey("alt+1", creation_array)
     keyboard.add_hotkey("alt+2", transfer_inventory)
 
