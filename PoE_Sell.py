@@ -1,7 +1,30 @@
-import tkinter, tkinter.messagebox
+import tkinter
+import wx
 import keyboard
 import time, copy
 import autoit
+
+
+class win(wx.Frame):
+    def __init__(self, parent):
+        super().__init__(parent, title=title, size=(600, 300))
+        dlg = wx.MessageBox(
+            "Вы дейстительно хотите выйти из программы?",
+            "Вопрос",
+            wx.YES_NO | wx.CANCEL | wx.NO_DEFAULT | wx.ICON_QUESTION,
+            self,
+        )
+
+        if dlg == wx.YES:
+            print("Нажата кнопка (да)")
+            parent = 1
+        elif dlg == wx.NO:
+            print("Нажата кнопка (нет)")
+            parent = 2
+        elif dlg == wx.CLOSE:
+            print("Нажата кнопка (отмена)")
+            parent = 0
+        self.Destroy()
 
 
 def creation_array():  # создаем массив предметов
@@ -10,10 +33,11 @@ def creation_array():  # создаем массив предметов
     global heightItem
     dimensions = select_area_sort()
     heightItem = sel_type_item()  # при бутылках увелитивается высота в 2
-    # heightItem = 2
-    arrItems = array_write(dimensions, heightItem)
-    arrGroupItems = sorting_items(arrItems)
-    print(arrGroupItems)
+    # heightItem = 1
+    if heightItem:
+        arrItems = array_write(dimensions, heightItem)
+        arrGroupItems = sorting_items(arrItems)
+        print(arrGroupItems)
 
 
 def select_area_sort():  # определение облости сортировки
@@ -38,16 +62,24 @@ def mouse_pos():
 
 
 def sel_type_item():  # выбор типа предмета сортировки
-    root = tkinter.Tk()
-    root.withdraw()
-    answer = tkinter.messagebox.askyesno(
-        title="Выбор предметов", message="Продаем камни?"
+    app = wx.App()
+    app.MainLoop()
+    winMessage = wx.MessageBox(
+        "Вы дейстительно хотите выйти из программы?",
+        "Вопрос",
+        wx.YES_NO | wx.CANCEL | wx.NO_DEFAULT | wx.ICON_QUESTION,
     )
-
-    root.destroy()
-    if answer:
-        return 1
-    return 2
+    if winMessage == wx.YES:
+        # print("Нажата кнопка (да)")
+        parent = 1
+    elif winMessage == wx.NO:
+        # print("Нажата кнопка (нет)")
+        parent = 2
+    elif winMessage == wx.CLOSE:
+        # print("Нажата кнопка (отмена)")
+        parent = 0
+    # app.MainLoop()
+    return parent
 
 
 def array_write(dimensions, heightItem):  # запись предемеов в массив
@@ -79,19 +111,24 @@ def mouse_move(coordinates, posX, posY, delta):  # перемещение кур
 
 
 def determ_quality():  # определение качества
+    poeWin = "Path of Exile"
+    autoit.win_activate(poeWin)
+    autoit.clip_put("")
     time.sleep(0.2)
     keyboard.send("ctrl+c")
     time.sleep(0.1)
-    item = autoit.clip_get()
-    autoit.clip_put("")
-    if item.find("Quality") > 0:
-        item = item.split("\n")
-        for l in item:
-            if l.find("Quality") != -1:
-                item = l
-                break
-        item = [x for x in item if x.isdigit()]
-        return int("".join(item))
+    # print(autoit.clip_get())
+    if autoit.clip_get():
+        item = autoit.clip_get()
+        autoit.clip_put("")
+        if item.find("Quality") > 0:
+            item = item.split("\n")
+            for l in item:
+                if l.find("Quality") != -1:
+                    item = l
+                    break
+            item = [x for x in item if x.isdigit()]
+            return int("".join(item))
 
 
 def sorting_items(arrItems):  # сортировка предметов
