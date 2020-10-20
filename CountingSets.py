@@ -1,7 +1,10 @@
 # скрипт для подсчета предметов брони для рецепта на каусы
-import keyboard
+import keyboard, wx
 import time
 import autoit
+import pyautogui, cv2, imutils
+import os
+import numpy as np
 
 
 class Item:
@@ -63,15 +66,14 @@ class Item:
 
 class Main:
     def __init__(self):
-        self.startCoor = [43, 181]
 
         self.typeList = [
             "Weapon",
-            "Shield",
-            "Body Armou",
-            "Helmet",
-            "Glove",
-            "Boot",
+            "Shields",
+            "Body Armour",
+            "Helmets",
+            "Gloves",
+            "Boots",
             "Ring",
             "Amulet",
             "Belt",
@@ -80,44 +82,117 @@ class Main:
 
         # self.pass_inventar()
 
-        print(1)
+        # print(1)
 
-    def pass_inventar(self):  # проход про вкладке
-        item = Item()
-        while True:
-            self.mouse_move(item)
-            if not self.definition_item():
-                break
-            break
+    def take_screenshot(self):  # делаем снимок экрана
+        img = pyautogui.screenshot(region=(5, 70, 680, 780))
+        return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 
-    def mouse_move(self, itemPos):  # перемещение курсора
-        x = self.startCoor[0] + itemPos.dimensions[0] * itemPos.delta[0]
-        y = self.startCoor[1] + itemPos.dimensions[1] * itemPos.delta[1]
-        autoit.mouse_move(x, y)
-        time.sleep(0.2)
+    def show_image(self, image):
+        cv2.imshow("Image", image)
+        cv2.waitKey(0)
 
-    def definition_item(self):  # определение предмета
-        # item = self.scanning()
-        time.sleep(0.1)
-        if autoit.clip_get():
-            item = autoit.clip_get()
-            time.sleep(0.1)
-            autoit.clip_put("")
-            item = Item(item)
-            self.listItems[item.type] += 1
-        else:
-            autoit.tooltip("Неполучилось сосканировать предмет")
-            time.sleep(0.5)
-            autoit.tooltip("")
+    def start_scanning(self):  # начало сканирования
+        if self.determining_size_tab():  # определение ращзмера вкладки
+            return
+        print(f"scale = {self.scale}")
 
-    def scanning(self):  # копирование характеристик предмета
-        autoit.clip_put("")
-        keyboard.send("ctrl+c")
-        time.sleep(0.2)
-        if autoit.clip_get():
-            item = autoit.clip_get()
-            autoit.clip_put("")
-            return item
+        self.screenshot = self.take_screenshot()
+
+        self.mainImag_2 = self.take_screenshot()
+
+        # directory = "E:\python\PRO\PoE\data\images\Body Armour"
+        # directory = "E:\python\PRO\PoE\data\images\Boots"
+        # directory = "E:\python\PRO\PoE\data\images\Shields"
+        # directory = "E:\python\PRO\PoE\data\images\Helmets"
+        directory = "E:\python\PRO\PoE\data\images"
+        for top, dirs, files in os.walk(directory):
+            for nm in files:
+                print(os.path.join(top, nm))
+                self.mainImag = self.take_screenshot()
+                listItem = self.search_items(os.path.join(top, nm))
+                if listItem:
+                    typeItem = top[top.rfind("\\") + 1 :]
+                    self.listItems[typeItem] += len(listItem)
+            # self.show_image(self.mainImag)
+        self.show_image(self.mainImag_2)
+
+    def determining_size_tab(self):  # определение ращзмера вкладки
+        app = wx.App()
+        # app.MainLoop()
+        winMessage = wx.MessageBox(
+            "Открыта большая вкладка?",
+            "Вопрос",
+            wx.YES_NO | wx.CANCEL | wx.NO_DEFAULT | wx.ICON_QUESTION,
+        )
+        if winMessage == wx.YES:
+            # print("Нажата кнопка (да)")
+            self.scale = 3  # коэффициент уменьшение шаблона
+        elif winMessage == wx.NO:
+            # print("Нажата кнопка (нет)")
+            self.scale = 1.5  # коэффициент уменьшение шаблона
+        elif winMessage == wx.CANCEL:
+            app.Destroy()
+            return 1
+        # print(winMessage)
+
+        app.Destroy()
+
+    def search_items(self, template):  # поиск предметов на вкладке
+
+        img_gray = cv2.cvtColor(self.screenshot, cv2.COLOR_BGRA2GRAY)
+
+        template = cv2.imread(template, 0)
+        resized_img = imutils.resize(
+            template, width=int(template.shape[1] / self.scale)
+        )
+        w_template, h_template = resized_img.shape[::-1]
+
+        # self.show_image(img_gray)
+        # self.show_image(resized_img)
+
+        res = cv2.matchTemplate(img_gray, resized_img, cv2.TM_CCOEFF_NORMED)
+        threshold = 0.8
+        loc = np.where(res >= threshold)
+
+        if len(loc[0]) > 0:
+            arr = [0, 0]
+            arr[0] = loc[1].tolist()
+            arr[1] = loc[0].tolist()
+            arr = list(zip(arr[0], arr[1]))
+            arr = self.remove_duplicates(arr, resized_img.shape[::-1])
+
+            for pt in arr:
+                col = (0, 0, 255)
+                bottom_right = (pt[0] + w_template, pt[1] + h_template)
+                cv2.rectangle(
+                    self.mainImag, pt, bottom_right, col, 2,
+                )
+
+            for pt in zip(*loc[::-1]):
+                col = (0, 0, 255)
+                bottom_right = (pt[0] + w_template, pt[1] + h_template)
+                cv2.rectangle(
+                    self.mainImag_2, pt, bottom_right, col, 2,
+                )
+
+            return arr
+        return 0
+
+    def remove_duplicates(self, tmpArr, size):  # сокращение дублируемых точек
+        arr = [tmpArr[0]]
+        for dup in tmpArr[1:]:
+            if self.check_entry(arr, dup, size):
+                arr.append(dup)
+        return arr
+
+    def check_entry(self, arr, dup, size):
+        for item in arr:
+            deltaX = abs(dup[0] - item[0])
+            deltaY = abs(dup[1] - item[1])
+            if deltaX < size[0] * 0.8 and deltaY < size[1] * 0.8:
+                return 0
+        return 1
 
     def print_list_Items(self):
         print(self.listItems)
@@ -128,11 +203,10 @@ class Main:
 
 if __name__ == "__main__":
     main = Main()
-    autoit.clip_put("")
     poeWin = "Path of Exile"
     autoit.win_activate(poeWin)
     # keyboard.add_hotkey("alt+1", main)
-    keyboard.add_hotkey("ctrl+c", main.definition_item)
+    keyboard.add_hotkey("ctrl+1", main.start_scanning)
     keyboard.add_hotkey("alt+1", main.print_list_Items)
     keyboard.add_hotkey("alt+3", main.clier_list_Items)
 
