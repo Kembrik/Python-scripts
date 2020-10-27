@@ -43,11 +43,20 @@ def reset_sw():
 def on_mouse_down(event):
     global dif_x, dif_y
     win_position = [int(coord) for coord in root.wm_geometry().split("+")[1:]]
-    dif_x, dif_y = win_position[0] - event.x_root, win_position[1] - event.y_root
+    dif_x, dif_y = win_position[0] - \
+        event.x_root, win_position[1] - event.y_root
 
 
 def update_position(event):
     root.wm_geometry("+%d+%d" % (event.x_root + dif_x, event.y_root + dif_y))
+
+
+def showMenu(e):
+    menu.post(e.x_root, e.y_root)
+
+
+def onExit():
+    root.quit()
 
 
 # def stopwatch():
@@ -75,9 +84,13 @@ button1.grid(row=1, columnspan=2, sticky="ew")
 root.bind("<ButtonPress-1>", on_mouse_down)
 root.bind("<B1-Motion>", update_position)
 
+menu = tkinter.Menu(root.master, tearoff=0)
+menu.add_command(label="Выход", command=onExit)
+root.bind("<Button-3>", showMenu)
+
+
 root.mainloop()
 
 
 # if __name__ == "__main__":
 #     stopwatch()
-
