@@ -1,7 +1,8 @@
 import tkinter
 import wx
 import keyboard
-import time, copy
+import time
+import copy
 import autoit
 
 
@@ -63,9 +64,8 @@ def mouse_pos():
 
 def sel_type_item():  # выбор типа предмета сортировки
     app = wx.App()
-    app.MainLoop()
     winMessage = wx.MessageBox(
-        "Вы дейстительно хотите выйти из программы?",
+        "Продаем камни?",
         "Вопрос",
         wx.YES_NO | wx.CANCEL | wx.NO_DEFAULT | wx.ICON_QUESTION,
     )
@@ -79,6 +79,7 @@ def sel_type_item():  # выбор типа предмета сортировк�
         # print("Нажата кнопка (отмена)")
         parent = 0
     # app.MainLoop()
+    app.Destroy()
     return parent
 
 
@@ -117,10 +118,12 @@ def determ_quality():  # определение качества
     time.sleep(0.2)
     keyboard.send("ctrl+c")
     time.sleep(0.1)
-    # print(autoit.clip_get())
-    if autoit.clip_get():
+    try:
         item = autoit.clip_get()
         autoit.clip_put("")
+    except:
+        item = None
+    if item:
         if item.find("Quality") > 0:
             item = item.split("\n")
             for l in item:
@@ -184,7 +187,8 @@ def transfer_inventory():  # перекладываем сеты в инверт
     global arrGroupItems
     delta = [53, 53 * heightItem]
     inventory_sizes = [[] for i in range(5 // heightItem)]
-    inventory, arrGroupItems = distribution_inventory(arrGroupItems, inventory_sizes)
+    inventory, arrGroupItems = distribution_inventory(
+        arrGroupItems, inventory_sizes)
     transfer(inventory, delta)
     if arrGroupItems:
         print("Еще не все!")
