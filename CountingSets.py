@@ -1,8 +1,11 @@
 # скрипт для подсчета предметов брони для рецепта на каусы
-import keyboard, wx
+import keyboard
+import wx
 import time
 import autoit
-import pyautogui, cv2, imutils
+import pyautogui
+import cv2
+import imutils
 import os
 import numpy as np
 
@@ -58,7 +61,7 @@ class Item:
         for typeItem in self.listItems:
             for i in self.listItems[typeItem]:
                 tmpType = item[: item.find("-")]
-                tmpType = tmpType[tmpType[:-1].rfind("\n") + 1 : -2]
+                tmpType = tmpType[tmpType[:-1].rfind("\n") + 1: -2]
                 if i in tmpType:
                     self.type = typeItem
                     return
@@ -105,14 +108,14 @@ class Main:
         # directory = "E:\python\PRO\PoE\data\images\Boots"
         # directory = "E:\python\PRO\PoE\data\images\Shields"
         # directory = "E:\python\PRO\PoE\data\images\Helmets"
-        directory = "E:\python\PRO\PoE\data\images"
+        directory = r"E:\python\PRO\PoE\data\images"
         for top, dirs, files in os.walk(directory):
             for nm in files:
                 print(os.path.join(top, nm))
                 self.mainImag = self.take_screenshot()
                 listItem = self.search_items(os.path.join(top, nm))
                 if listItem:
-                    typeItem = top[top.rfind("\\") + 1 :]
+                    typeItem = top[top.rfind("\\") + 1:]
                     self.listItems[typeItem] += len(listItem)
             # self.show_image(self.mainImag)
         self.show_image(self.mainImag_2)
@@ -202,6 +205,7 @@ class Main:
 
 
 if __name__ == "__main__":
+    print(1)
     main = Main()
     poeWin = "Path of Exile"
     autoit.win_activate(poeWin)
