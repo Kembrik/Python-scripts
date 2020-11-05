@@ -35,8 +35,8 @@ if __name__ == "__main__":
 
     poePros = "PathofExile_x64.exe"
     poeWin = "Path of Exile"
-    minute = 0.5
-    # minute = random.randint(10, 15)
+    # minute = 0.5
+    minute = random.randint(10, 15)
 
     while True:
         time.sleep(minute * 60)
